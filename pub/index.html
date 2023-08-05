@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Piramide </title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</head>
+<body class="p-3">
+<!--
+    <style>
+.output-box {
+    display: inline-block;
+    font-family: 'monospace' ;
+    padding: 1rem ;
+    border-radius: 15px;
+    background: lightgray;
+}
+    </style>
+-->
+
+    <fieldset class="container mb-5
+                     row g3 align-items-center">
+        <div class="col">
+            <label for="length-input"
+                   class="form-label">
+                Length
+            </label>
+            <input type="number" name="length" id="length-input" min="1"
+                   class="form-control"
+                   onkeyup="reloadOutput()">
+        </div>
+        <div class="col">
+            <button id="gen-btn" onclick="reloadOutput()"
+                    class="btn btn-outline-primary">
+                Generate
+            </button>
+        </div>
+    </fieldset>
+
+    <div class="card container
+                bg-secondary-subtle">
+        <pre id="output-box" class="card-body"> </pre>
+    </div>
+
+    <script>
+        const input  = document.querySelector( '#length-input' )
+        const output = document.querySelector( '#output-box' )
+
+        const reloadOutput = async () => {
+            if ( !input.value ) {
+                return
+            }
+
+            const res = await fetch( '/pyramid/get', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify( { length: input.value } )
+            })
+            output.textContent = await res.text()
+        }
+    </script>
+</body>
+</html>
