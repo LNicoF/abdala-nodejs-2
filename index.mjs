@@ -42,5 +42,5 @@ router.addRoute( '/pyramid/get', async ( req, res ) => {
 const server = http.createServer( ( req, res ) => { router.run( req, res ) } )
 
 server.listen( PORT, HOST, () => {
-    console.log( `listening on ${ HOST }/${ PORT }` )
+    console.log( `listening on http://${ HOST }:${ PORT }/` )
 } )
